@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Create Event{% endblock %}
+{% block content %}
+<h2>Create New Event</h2>
+<form method="post">
+    <label>Title:<br><input type="text" name="title" required></label><br>
+    <label>Description:<br><textarea name="description" required></textarea></label><br>
+    <label>Category:<br>
+        <select name="category" required>
+            <option value="Garage Sales">Garage Sales</option>
+            <option value="Sports Matches">Sports Matches</option>
+            <option value="Community Classes">Community Classes</option>
+            <option value="Volunteer Opportunities">Volunteer Opportunities</option>
+            <option value="Exhibitions">Exhibitions</option>
+            <option value="Festivals/Celebrations">Festivals/Celebrations</option>
+        </select>
+    </label><br>
+    <label>Location:<br><input type="text" name="location" required></label><br>
+    <label>Date and Time:<br><input type="datetime-local" name="date" required></label><br>
+    <button type="submit">Create Event</button>
+</form>
+{% endblock %}

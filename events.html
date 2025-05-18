@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Events | Community Pulse{% endblock %}
+
+{% block content %}
+<h2>Upcoming Events</h2>
+
+<!-- Category Filter -->
+<form method="get" action="{{ url_for('events') }}">
+    <label for="category">Filter by Category:</label>
+    <select name="category" id="category" onchange="this.form.submit()">
+        <option value="">All</option>
+        {% for cat in categories %}
+            <option value="{{ cat[0] }}" {% if request.args.get('category') == cat[0] %}selected{% endif %}>{{ cat[0] }}</option>
+        {% endfor %}
+    </select>
+</form>
+
+<hr>
+
+{% if events %}
+    {% for event in events %}
+        <div style="border:1px solid #ccc; padding:10px; margin-bottom:15px;">
+            <h3>{{ event.title }}</h3>
+            <p><strong>Category:</strong> {{ event.category }}</p>
+            <p><strong>Date:</strong> {{ event.date.strftime('%Y-%m-%d %H:%M') }}</p>
+            <p><strong>Location:</strong> {{ event.location }}</p>
+            <a href="{{ url_for('event_detail', event_id=event.id) }}">View Details & Register</a>
+        </div>
+    {% endfor %}
+{% else %}
+    <p>No events found.</p>
+{% endif %}
+
+{% endblock %}

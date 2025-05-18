@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}{{ event.title }} | Community Pulse{% endblock %}
+
+{% block content %}
+<h2>{{ event.title }}</h2>
+<p><strong>Category:</strong> {{ event.category }}</p>
+<p><strong>Date:</strong> {{ event.date.strftime('%Y-%m-%d %H:%M') }}</p>
+<p><strong>Location:</strong> {{ event.location }}</p>
+<p><strong>Description:</strong> {{ event.description }}</p>
+
+{% if event.cancelled %}
+    <p style="color:red;"><strong>This event has been cancelled.</strong></p>
+{% endif %}
+
+<hr>
+<h3>Register Your Interest</h3>
+<form method="post">
+    <label>Name:<br><input type="text" name="name" required></label><br><br>
+    <label>Email:<br><input type="email" name="email" required></label><br><br>
+    <label>Phone:<br><input type="text" name="phone" required></label><br><br>
+    <label>Number of Guests:<br><input type="number" name="guests" min="0" value="0"></label><br><br>
+    <button type="submit">Register</button>
+</form>
+
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <ul>
+        {% for message in messages %}
+            <li style="color:green;">{{ message }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+{% endwith %}
+
+<hr>
+<h3>Registered Participants</h3>
+<ul>
+    {% for participant in event.participants %}
+        <li>{{ participant.name }} ({{ participant.guests }} guests)</li>
+    {% endfor %}
+</ul>
+
+<a href="{{ url_for('events') }}">Back to Events</a>
+{% endblock %}
